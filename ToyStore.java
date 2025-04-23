@@ -1,4 +1,4 @@
-public class ToyStore {
+
 
     /**
      * Магазин игрушек (Java)
@@ -13,7 +13,34 @@ public class ToyStore {
      * Вызвать Get 10 раз и записать результат в файл.
      * 
      */
-    public static void main(String[] args) {
-        
+
+public class ToyStore {   
+    private int id;                     // id игрушки
+    private String name = new String(); // имя игрушки
+    private int dropRate;               // вес, частота выпадения, от 1 до 100
+    
+    //Создадим конструктор для инициализации полей и методы для получения значений этих полей.
+    //С его помощью будем создавать и управлять объектами класса ToyStore.
+    public ToyStore(int id, String name, int dropRate) {
+        this.id = id;
+        this.name = name;
+        this.dropRate = dropRate;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getDropRate() {
+        return dropRate;
+    }
+
+    @Override
+    public String toString() {
+        return "Вы выиграли игрушку" + name + " Сообщите сотруднику Ваше имя и ID игрушки: " + id;
     }
 }

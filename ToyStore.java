@@ -1,46 +1,38 @@
 
 
-    /**
-     * Магазин игрушек (Java)
-     * Проект розыгрыша в магазине игрушек. 
-     * Функционал содержит добавление новых игрушек и задания веса для выпадения игрушек.
-     * 
-     * Программа может использоваться в различных системах, поэтому необходимо разработать класс в виде конструктора.
-     * Класс-конструктор принимает минимум 3 строки, содержащие три поля: id игрушки, текстовое название и частоту выпадения игрушки.
-     * Из принятой строки id и частоты выпадения(веса) заполнить минимум три массива.
-     * Используя API коллекцию: java.util.PriorityQueue добавить элементы в коллекцию.
-     * Организовать общую очередь.
-     * Вызвать Get 10 раз и записать результат в файл.
-     * 
-     */
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
-public class ToyStore {   
-    private int id;                     // id игрушки
-    private String name = new String(); // имя игрушки
-    private int dropRate;               // вес, частота выпадения, от 1 до 100
-    
-    //Создадим конструктор для инициализации полей и методы для получения значений этих полей.
-    //С его помощью будем создавать и управлять объектами класса ToyStore.
-    public ToyStore(int id, String name, int dropRate) {
-        this.id = id;
-        this.name = name;
-        this.dropRate = dropRate;
+public class ToyStore {
+    private List<Toy> toys;
+
+    public ToyStore(List<Toy> toys) {
+        this.toys = toys;
     }
     
-    public int getId() {
-        return id;
+    //получаем разыгрываемую игрушку
+    public Toy getToyPrizeDrows() {
+        BringToyByRate random = new BringToyByRate();
+        Toy toy = random.chooseByRate(toys);
+        return toy;
     }
 
-    public String getName() {
-        return name;
+    //записываем в файл разыгранную игрушку
+    public void savePrizeDrows() {
+        Toy toy = getToyPrizeDrows();
+        String text = toy.toString();
+        try(FileWriter writer = new FileWriter("SpecialModuleMiddleTest2java/ToysPrizeDrows.txt", true))
+        { 
+            writer.write(text);
+            writer.append('\n');
+            writer.flush();
+        }
+        catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+        toys.remove(toy);
     }
 
-    public int getDropRate() {
-        return dropRate;
-    }
-
-    @Override
-    public String toString() {
-        return "Вы выиграли игрушку" + name + " Сообщите сотруднику Ваше имя и ID игрушки: " + id;
-    }
 }

@@ -1,21 +1,21 @@
 import java.util.List;
 
+//метод выбора призовой игрушки и запись в массив
 class BringToyByRate {
-
-    public Toy bringByRate(List<Toy> toys) {
-        
-        int countRate = 0;
-        for (Toy toy : toys)
-            countRate += toy.getDropRate();
-        int rate = (int) (Math.random() * countRate);
-
-        int fullRate = 0;
+    public Toy chooseByRate(List<Toy> toys) {
+        double completeRate = 0.0;
         for (Toy toy : toys) {
-            fullRate += toy.getDropRate();
-            if (fullRate >= rate)
+            completeRate += toy.getRate();
+        }
+        double rate = Math.random() * completeRate;
+        double countRate = 0.0;
+        for (Toy toy : toys) {
+            countRate += toy.getRate();
+            if (countRate >= rate)
                 return toy;
         }
-        throw new RuntimeException("Игрушка не будет разыграна");
+        throw new RuntimeException("Should never be shown.");
     }
+
 }
 
